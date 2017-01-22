@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/ReqResSample.iml" filepath="$PROJECT_DIR$/ReqResSample.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/reqreslib/reqreslib.iml" filepath="$PROJECT_DIR$/reqreslib/reqreslib.iml" />
+    </modules>
+  </component>
+</project>
