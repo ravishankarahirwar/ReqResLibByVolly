@@ -9,12 +9,15 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+
+import java.util.Collections;
 import java.util.Map;
 
 import ravishankar.lib.reqres.callbacks.ConnectionListener;
 import ravishankar.lib.reqres.factory.ConnectRequest;
 import ravishankar.lib.reqres.factory.Connector;
 import ravishankar.lib.reqres.factory.RequestPool;
+import ravishankar.lib.reqres.factory.ResponseResults;
 import ravishankar.lib.reqres.utils.ReqResUtil;
 
 
@@ -29,6 +32,7 @@ import ravishankar.lib.reqres.utils.ReqResUtil;
  */
 
 public class RequestManager extends ConnectRequest implements Connector {
+
     private static final String TAG = "RequestManager";
     int mConnectionType = Request.Method.POST;
     private String mRequestUrl;
@@ -45,18 +49,19 @@ public class RequestManager extends ConnectRequest implements Connector {
         mConnectionType = Request.Method.POST;
     }
 
-    public RequestManager(Context mContext, ConnectionListener connectionListener, String requestUrl, int dataTag, int connectionType) {
+    public RequestManager(Context mContext, int requestType, ConnectionListener connectionListener, String requestUrl, int dataTag, int connectionType) {
         this(mContext, connectionListener, requestUrl, dataTag);
-        this.mConnectionType = connectionType;
+        this.mConnectionType = requestType;
     }
 
     @Override
     public void connect() {
-        StringRequest postRequest = new StringRequest(mConnectionType, mRequestUrl,
+        StringRequest postRequest = new StringRequest(Request.Method.GET, mRequestUrl,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                         parseJson(response);
+                        mConnectionListener.onResponse(ResponseResults.RESPONSE_OK,response);
+//                         parseJson(response);
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -83,7 +88,12 @@ public class RequestManager extends ConnectRequest implements Connector {
 
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
+                if (mHeaderParams == null) {
+                    return Collections.emptyMap();
+                } else {
+                    Log.v(TAG, "Header Params : \n" + mHeaderParams.toString());
                     return mHeaderParams;
+                }
             }
 
             @Override
@@ -91,8 +101,8 @@ public class RequestManager extends ConnectRequest implements Connector {
                 return "application/json";
             }
         };
-        postRequest.setRetryPolicy(ReqResUtil.getRetryPolicy());
-        postRequest.setTag(mRequestTag);
+//        postRequest.setRetryPolicy(ReqResUtil.getRetryPolicy());
+//        postRequest.setTag(mRequestTag);
         RequestPool.getInstance(this.mContext).addToRequestQueue(postRequest);
     }
 

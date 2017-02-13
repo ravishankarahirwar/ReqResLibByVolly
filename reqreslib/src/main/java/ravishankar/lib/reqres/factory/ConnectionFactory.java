@@ -19,10 +19,11 @@ import ravishankar.lib.reqres.utils.Util;
 public class ConnectionFactory extends ConnectRequest {
 
 
-    public ConnectionFactory(Context context,String requestUrl,
+    public ConnectionFactory(Context context, int requestType, String requestUrl,
                              ConnectionListener connectionListener) {
         super();
         mConnectionListener = connectionListener;
+        this.mRequestType = requestType;
         this.mContext = context;
         this.mRequestUrl = requestUrl;
     }

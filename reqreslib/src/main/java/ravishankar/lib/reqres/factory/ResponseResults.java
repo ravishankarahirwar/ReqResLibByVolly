@@ -14,5 +14,4 @@ public interface ResponseResults {
     int PARSE_ERR0R = 4;
     int RESULT_FAIL = 5;
     int UNKNOWN = 6;
-
 }

@@ -16,6 +16,7 @@ import ravishankar.lib.reqres.callbacks.ConnectionListener;
 public class ConnectRequest {
     protected Context mContext;
     protected String mRequestUrl;
+    protected int mRequestType;
     protected Map<String, String> mHeaderParams;
     protected Map<String, String> mPostParams;
     protected ConnectionListener mConnectionListener;
